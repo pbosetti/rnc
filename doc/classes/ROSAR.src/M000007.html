@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>data_frame (ROSAR)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File rosar.rb, line 102</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">data_frame</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">df</span>)
+    <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">do</span>
+      <span class="ruby-ivar">@r</span>.<span class="ruby-identifier">cmd</span> <span class="ruby-node">&quot;#{name}&lt;-read.table('#{FIFO}', h=T)&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-node">&quot;#{FIFO}&quot;</span>, <span class="ruby-value str">&quot;w&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">f</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">df</span>.<span class="ruby-identifier">keys</span><span class="ruby-operator">*</span><span class="ruby-value str">&quot;\t&quot;</span>
+      <span class="ruby-identifier">df</span>[<span class="ruby-identifier">df</span>.<span class="ruby-identifier">keys</span>[<span class="ruby-value">0</span>]].<span class="ruby-identifier">size</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">df</span>.<span class="ruby-identifier">each_key</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">f</span>.<span class="ruby-identifier">print</span> <span class="ruby-node">&quot;#{df[k][i]}\t&quot;</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">f</span>.<span class="ruby-identifier">puts</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>
