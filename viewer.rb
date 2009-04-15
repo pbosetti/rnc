@@ -43,32 +43,32 @@ $pack_size = 40
 $sock = UDPSocket.new
 $sock.bind('', 60000)
 $sock.setsockopt(
-		Socket::SOL_SOCKET,
-		Socket::SO_RCVBUF,
-		$pack_size+16)
+    Socket::SOL_SOCKET,
+    Socket::SO_RCVBUF,
+    $pack_size+16)
 
 def init
-	glClearColor(0.0, 0.0, 0.0, 0.0)
-	glShadeModel(GL_SMOOTH)
+  glClearColor(0.0, 0.0, 0.0, 0.0)
+  glShadeModel(GL_SMOOTH)
   glEnable(GL_DEPTH_TEST)
   glEnable(GL_BLEND)
   glEnable(GL_LINE_SMOOTH)
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 end
 
 display = Proc.new do
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_ACCUM_BUFFER_BIT)
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_ACCUM_BUFFER_BIT)
   glPushMatrix()
-	glRotate($fYDiff, 1,0,0)
-	glRotate($fXDiff, 0,1,0)
-	glRotate($fZDiff, 0,0,1)
+  glRotate($fYDiff, 1,0,0)
+  glRotate($fXDiff, 0,1,0)
+  glRotate($fZDiff, 0,0,1)
   glScale($fScale, $fScale, $fScale)
-  glMatrixMode(GL_PROJECTION)
-  glTranslate(0.1*$x_pan, 0.1*$y_pan, 0.0)
-  glMatrixMode(GL_MODELVIEW)
+  # glMatrixMode(GL_PROJECTION)
+  # glTranslate(0.1*$x_pan, 0.1*$y_pan, 0.0)
+  # glMatrixMode(GL_MODELVIEW)
   
   if $draw[:axes]
-  	glColor(1,0,0,0.66)
+    glColor(1,0,0,0.66)
     glBegin(GL_LINES)
       glVertex(-$axl,0,0)
       glVertex($axl,0,0)
@@ -79,7 +79,7 @@ display = Proc.new do
     glutSolidCone(20, 30, 20, 1)
     glPopMatrix()
 
-  	glColor(0,1,0,0.66)
+    glColor(0,1,0,0.66)
     glBegin(GL_LINES)
       glVertex(0,-$axl,0)
       glVertex(0,$axl,0)
@@ -90,7 +90,7 @@ display = Proc.new do
     glutSolidCone(20, 30, 20, 1)
     glPopMatrix()
 
-  	glColor(0,0,1,0.66)
+    glColor(0,0,1,0.66)
     glBegin(GL_LINES)
       glVertex(0,0,-$axl)
       glVertex(0,0,$axl)
@@ -103,66 +103,66 @@ display = Proc.new do
   end
   
 
-	glLineWidth(3.0)
+  glLineWidth(3.0)
   glPushMatrix()
   glTranslate(0, -($z_s[:y]/2.0 + $x_s[:y]/2), -$x_s[:z]/2.0)
-	glScale($x_s[:x], $x_s[:y], $x_s[:z])
-	glColor(1,0,0,0.9)
-	glutSolidCube(1)
+  glScale($x_s[:x], $x_s[:y], $x_s[:z])
+  glColor(1,0,0,0.9)
+  glutSolidCube(1)
   # glColor(0,0,0,1)  
   #   glutWireCube(1.0)
   glPopMatrix()
-	
-	glPushMatrix()
-	glTranslate($x-($z_s[:x]/2.0 + $y_s[:x]/2.0), $y_s[:y]/2.0-$z_s[:y]/2.0, -$x_s[:z]/2.0) 
-	glScale($y_s[:x], $y_s[:y], $y_s[:z])
-	glColor(0,1,0,0.9)
-	glutSolidCube(1.0)
+  
+  glPushMatrix()
+  glTranslate($x-($z_s[:x]/2.0 + $y_s[:x]/2.0), $y_s[:y]/2.0-$z_s[:y]/2.0, -$x_s[:z]/2.0) 
+  glScale($y_s[:x], $y_s[:y], $y_s[:z])
+  glColor(0,1,0,0.9)
+  glutSolidCube(1.0)
   # glColor(0,0,0,1)  
   #   glutWireCube(1.0)
-	glPopMatrix()
+  glPopMatrix()
 
-	glPushMatrix()
-	glTranslate($x, $y, $z-$z_s[:z]/2.0)
-	glScale($z_s[:x], $z_s[:y], $z_s[:z])
+  glPushMatrix()
+  glTranslate($x, $y, $z-$z_s[:z]/2.0)
+  glScale($z_s[:x], $z_s[:y], $z_s[:z])
   # glTranslate(0, 0, -0.04)
-	glColor(0,0,1, 0.9)
-	glutSolidCube(1.0)
+  glColor(0,0,1, 0.9)
+  glutSolidCube(1.0)
   # glTranslate(0,0,0.5)
   # glColor(1,1,1,1)
   # glutSolidCone(0.3,0.05,10,10)
   # glColor(0,0,0,1)  
   #   glutWireCube(1.0)
-	glPopMatrix()
-	glLineWidth(1.0)
+  glPopMatrix()
+  glLineWidth(1.0)
 
   if $draw[:box]
-  	glPushMatrix()
-  	glLineWidth(3.0)
-  	glTranslate(0, $range[:y]/2.0, $range[:z]/2.0)
-  	glScale($range[:x], $range[:y], $range[:z])
-  	glColor(1, 1, 1, 0.5)
-  	glutWireCube(1.0)
-  	glPopMatrix()
-  	glLineWidth(1.0)
-	end
+    glPushMatrix()
+    glLineWidth(3.0)
+    glTranslate(0, $range[:y]/2.0, $range[:z]/2.0)
+    glScale($range[:x], $range[:y], $range[:z])
+    glColor(1, 1, 1, 0.5)
+    glutWireCube(1.0)
+    glPopMatrix()
+    glLineWidth(1.0)
+  end
 
   glPopMatrix()
-	glFlush()
-	glutSwapBuffers()
+  glFlush()
+  glutSwapBuffers()
 end
 
 reshape  = lambda do |w, h|
-	glViewport(0, 0,  w,  h) 
-	glMatrixMode(GL_PROJECTION)
-	glLoadIdentity()
-	gluPerspective(65.0,  w/ h, 10.0, 2000.0)
-	glMatrixMode(GL_MODELVIEW)
-	glLoadIdentity()
-	glTranslate(0, 0, -2*$z_s[:z])
+  glViewport(0, 0,  w,  h) 
+  glMatrixMode(GL_PROJECTION)
+  glLoadIdentity()
+  gluPerspective(65.0,  w/ h, 10.0, 2000.0)
+  glMatrixMode(GL_MODELVIEW)
+  glLoadIdentity()
+  glTranslate(0, 0, -2*$z_s[:z])
 end
 
-timer = lambda do |value|
+idle = lambda do
   begin
     packet = $sock.recv_nonblock($pack_size)
     a = packet.split(",")
@@ -175,85 +175,77 @@ timer = lambda do |value|
         puts "Got unknown message #{@m[1].address}"
       end
     end
-    glutPostRedisplay()
   rescue
   end
-  glutTimerFunc(TIMER_FREQUENCY_MILLIS , timer, 0)
+  glutPostRedisplay()
 end
 
 keyboard = lambda do|key, x, y|
-	case  (key)
-		when ?x
-			$x = ($x + $incr)
-			glutPostRedisplay()
-		when ?X
-			$x = ($x - $incr)
-			glutPostRedisplay()
-		when ?y
-			$y = ($y + $incr)
-			glutPostRedisplay()
-		when ?Y
-			$y = ($y - $incr)
-			glutPostRedisplay()
-		when ?z
-			$z = ($z + $incr)
-			glutPostRedisplay()
-		when ?Z
-			$z = ($z - $incr)
-			glutPostRedisplay()
-		when ?b
-			$draw[:box] = !$draw[:box]
-			glutPostRedisplay()
-		when ?a
-			$draw[:axes] = !$draw[:axes]
-			glutPostRedisplay()
-		when ?\e
-			exit(0)
-	end
-	puts "X#{$x} Y#{$y} Z#{$z}"
+  case  (key)
+    when ?x
+      $x = ($x + $incr)
+    when ?X
+      $x = ($x - $incr)
+    when ?y
+      $y = ($y + $incr)
+    when ?Y
+      $y = ($y - $incr)
+    when ?z
+      $z = ($z + $incr)
+    when ?Z
+      $z = ($z - $incr)
+    when ?b
+      $draw[:box] = !$draw[:box]
+    when ?a
+      $draw[:axes] = !$draw[:axes]
+    when ?\e
+      exit(0)
+  end
+  puts "X#{$x} Y#{$y} Z#{$z}"
 end
 
 motion = lambda do |x,y|
-	if ($xLast != -1 || $yLast != -1)
-		$xLastIncr = x - $xLast
-		$yLastIncr = y - $yLast
-		if ($bmModifiers & GLUT_ACTIVE_CTRL != 0)
-			if ($xLast != -1)
-				$fScale += $yLastIncr*SCALE_FACTOR
-				$fScale = $fScale.abs
-				$x_pan = $y_pan = 0
-			end
+  if ($xLast != -1 || $yLast != -1)
+    $xLastIncr = x - $xLast
+    $yLastIncr = y - $yLast
+    if ($bmModifiers & GLUT_ACTIVE_CTRL != 0)
+      if ($xLast != -1)
+        $fScale += $yLastIncr*SCALE_FACTOR
+        $fScale = $fScale.abs
+        $x_pan = $y_pan = 0
+      end
     elsif ($bmModifiers & GLUT_ACTIVE_SHIFT != 0)
       if ($xLast != -1)
-        $x_pan = x - glutGet(GLUT_WINDOW_WIDTH)/2.0
-        $y_pan = - y + glutGet(GLUT_WINDOW_HEIGHT)/2.0
+        $x_pan = $xLastIncr * 2.5
+        $y_pan = -$yLastIncr * 2.5
+        glMatrixMode(GL_PROJECTION)
+        glTranslate($x_pan, $y_pan, 0.0)
+        glMatrixMode(GL_MODELVIEW)
       end
-		else
-			if ($xLast != -1)
-				$fXDiff += $xLastIncr
-				$fYDiff += $yLastIncr
-				$x_pan = $y_pan = 0
-			end
-		end
-	end
-	$xLast = x
+    else
+      if ($xLast != -1)
+        $fXDiff += $xLastIncr
+        $fYDiff += $yLastIncr
+        $x_pan = $y_pan = 0
+      end
+    end
+  end
+  $xLast = x
   $yLast = y
-	glutPostRedisplay()
 end
 
 mouse = lambda do |button,state,x,y|
-	$bmModifiers = glutGetModifiers()
-	if (button == GLUT_LEFT_BUTTON)
-		if (state == GLUT_UP)
-			$xLast = -1
-			$yLast = -1
-		end
-		$xLastIncr = 0
-		$yLastIncr = 0
-	end
-	
+  $bmModifiers = glutGetModifiers()
+  if (button == GLUT_LEFT_BUTTON)
+    if (state == GLUT_UP)
+      $xLast = -1
+      $yLast = -1
+    end
+    $xLastIncr = 0
+    $yLastIncr = 0
+  end
+  
 end
-
 
 glutInit
 glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH | GLUT_ALPHA)
@@ -266,6 +258,6 @@ glutReshapeFunc(reshape)
 glutKeyboardFunc(keyboard)
 glutMotionFunc(motion)
 glutMouseFunc(mouse)
-glutTimerFunc(TIMER_FREQUENCY_MILLIS , timer, 0)
+glutIdleFunc(idle)
 
 glutMainLoop
