@@ -6,7 +6,7 @@
 require 'rubygems'
 require 'opengl'
 require 'mathn'
-require 'lib/osc'
+require './lib/simpleipc'
 require 'socket'
 include Gl,Glu,Glut
 
@@ -40,12 +40,8 @@ $x_pan = 0.0
 $y_pan = 0.0
 
 $pack_size = 40
-$sock = UDPSocket.new
-$sock.bind('', 60000)
-$sock.setsockopt(
-    Socket::SOL_SOCKET,
-    Socket::SO_RCVBUF,
-    $pack_size+16)
+$from_rnc = SimpleIPC.new :port => 5000, :nonblock => true
+$from_rnc.listen
 
 def init
   glClearColor(0.0, 0.0, 0.0, 0.0)
@@ -163,20 +159,8 @@ reshape  = lambda do |w, h|
 end
 
 idle = lambda do
-  begin
-    packet = $sock.recv_nonblock($pack_size)
-    a = packet.split(",")
-    osc = OSC::Message.decode(packet)
-    osc.each do |m|
-      case m[1].address
-      when "/coord"
-        $x, $y, $z = m[1].to_a
-      else
-        puts "Got unknown message #{@m[1].address}"
-      end
-    end
-  rescue
-  end
+  data = $from_rnc.get {|s| s.split(',').map {|e| e.to_f}}
+  $x, $y, $z = data[0..2] if data
   glutPostRedisplay()
 end
 
@@ -208,7 +192,7 @@ motion = lambda do |x,y|
   if ($xLast != -1 || $yLast != -1)
     $xLastIncr = x - $xLast
     $yLastIncr = y - $yLast
-    if ($bmModifiers & GLUT_ACTIVE_CTRL != 0)
+    if ($bmModifiers & GLUT_ACTIVE_ALT != 0)
       if ($xLast != -1)
         $fScale += $yLastIncr*SCALE_FACTOR
         $fScale = $fScale.abs
