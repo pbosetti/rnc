@@ -28,7 +28,7 @@ Once your Debian machine has done installing (a virtual machine reboot is needed
 
 this will install additional packages and libraries.
 
-Once done, **close** this terminal and open a new standard terminal ("*Applications > Accessories > Terminal*") and copy/paset the following command:
+Once done, **close** this terminal and open a new standard terminal ("*Applications > Accessories > Terminal*") and copy/paste the following command:
 
     bash < <(wget -qO - https://raw.github.com/gist/1490243)
 
