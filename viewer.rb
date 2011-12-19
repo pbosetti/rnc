@@ -119,7 +119,7 @@ display = Proc.new do
   glPopMatrix()
 
   glPushMatrix()
-  glTranslate($x, $y, $z-$z_s[:z]/2.0)
+  glTranslate($x, $y, $z-$z_s[:z]/2.0) rescue {}
   glScale($z_s[:x], $z_s[:y], $z_s[:z])
   # glTranslate(0, 0, -0.04)
   glColor(0,0,1, 0.9)
